@@ -5,8 +5,16 @@ struct AppStorage {
     let settingsStore: JSONFileStore<AppSettings>
 
     init(fileManager: FileManager = .default) {
-        let baseURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("RemoteSessionMgr", isDirectory: true)
+        let applicationSupportURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let baseURL = applicationSupportURL.appendingPathComponent("RemoteSessionMgr", isDirectory: true)
+        let legacyBaseURL = applicationSupportURL.appendingPathComponent("RemoteDeskMac", isDirectory: true)
+
+        Self.migrateLegacyFilesIfNeeded(
+            from: legacyBaseURL,
+            to: baseURL,
+            fileManager: fileManager
+        )
+
         libraryStore = JSONFileStore(fileURL: baseURL.appendingPathComponent("sessions.json"))
         settingsStore = JSONFileStore(fileURL: baseURL.appendingPathComponent("settings.json"))
     }
@@ -35,6 +43,25 @@ struct AppStorage {
 
     func saveSettings(_ settings: AppSettings) throws {
         try settingsStore.save(settings)
+    }
+
+    private static func migrateLegacyFilesIfNeeded(from legacyBaseURL: URL, to currentBaseURL: URL, fileManager: FileManager) {
+        let migrations = [
+            (legacyBaseURL.appendingPathComponent("sessions.json"), currentBaseURL.appendingPathComponent("sessions.json")),
+            (legacyBaseURL.appendingPathComponent("settings.json"), currentBaseURL.appendingPathComponent("settings.json"))
+        ]
+
+        guard migrations.contains(where: { fileManager.fileExists(atPath: $0.0.path) }) else {
+            return
+        }
+
+        try? fileManager.createDirectory(at: currentBaseURL, withIntermediateDirectories: true)
+
+        for (legacyURL, currentURL) in migrations {
+            guard fileManager.fileExists(atPath: legacyURL.path) else { continue }
+            guard !fileManager.fileExists(atPath: currentURL.path) else { continue }
+            try? fileManager.copyItem(at: legacyURL, to: currentURL)
+        }
     }
 }
 
