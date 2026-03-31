@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "005000000000000000000001"
-               BuildableName = "RemoteDeskMac.app"
-               BlueprintName = "RemoteDeskMac"
-               ReferencedContainer = "container:RemoteDeskMac.xcodeproj">
+               BuildableName = "RemoteSessionMgr.app"
+               BlueprintName = "RemoteSessionMgr"
+               ReferencedContainer = "container:RemoteSessionMgr.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "005000000000000000000001"
-            BuildableName = "RemoteDeskMac.app"
-            BlueprintName = "RemoteDeskMac"
-            ReferencedContainer = "container:RemoteDeskMac.xcodeproj">
+            BuildableName = "RemoteSessionMgr.app"
+            BlueprintName = "RemoteSessionMgr"
+            ReferencedContainer = "container:RemoteSessionMgr.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "005000000000000000000001"
-            BuildableName = "RemoteDeskMac.app"
-            BlueprintName = "RemoteDeskMac"
-            ReferencedContainer = "container:RemoteDeskMac.xcodeproj">
+            BuildableName = "RemoteSessionMgr.app"
+            BlueprintName = "RemoteSessionMgr"
+            ReferencedContainer = "container:RemoteSessionMgr.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

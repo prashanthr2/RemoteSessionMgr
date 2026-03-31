@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001000000000000000000001 /* RemoteDeskMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000001 /* RemoteDeskMacApp.swift */; };
+		001000000000000000000001 /* RemoteSessionMgrApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000001 /* RemoteSessionMgrApp.swift */; };
 		001000000000000000000002 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000002 /* AppSettings.swift */; };
 		001000000000000000000003 /* RemoteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000003 /* RemoteSession.swift */; };
 		001000000000000000000004 /* SessionFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000004 /* SessionFolder.swift */; };
@@ -34,7 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		002000000000000000000001 /* RemoteDeskMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDeskMacApp.swift; sourceTree = "<group>"; };
+		002000000000000000000001 /* RemoteSessionMgrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionMgrApp.swift; sourceTree = "<group>"; };
 		002000000000000000000002 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		002000000000000000000003 /* RemoteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSession.swift; sourceTree = "<group>"; };
 		002000000000000000000004 /* SessionFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFolder.swift; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		002000000000000000000012 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		002000000000000000000019 /* SidebarInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarInspectorView.swift; sourceTree = "<group>"; };
 		002000000000000000000013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		002000000000000000000014 /* RemoteDeskMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoteDeskMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		002000000000000000000014 /* RemoteSessionMgr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoteSessionMgr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				004000000000000000000002 /* Sources */,
-				00400000000000000000000A /* RemoteDeskMac */,
+				00400000000000000000000A /* RemoteSessionMgr */,
 				00400000000000000000000B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,12 +88,12 @@
 				004000000000000000000003 /* Launchers */,
 				004000000000000000000004 /* Models */,
 				004000000000000000000005 /* Persistence */,
-				002000000000000000000001 /* RemoteDeskMacApp.swift */,
+				002000000000000000000001 /* RemoteSessionMgrApp.swift */,
 				004000000000000000000006 /* Utilities */,
 				004000000000000000000007 /* ViewModels */,
 				004000000000000000000008 /* Views */,
 			);
-			path = Sources/RemoteDeskMac;
+			path = Sources/RemoteSessionMgr;
 			sourceTree = SOURCE_ROOT;
 		};
 		004000000000000000000003 /* Launchers */ = {
@@ -160,18 +160,18 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		00400000000000000000000A /* RemoteDeskMac */ = {
+		00400000000000000000000A /* RemoteSessionMgr */ = {
 			isa = PBXGroup;
 			children = (
 				002000000000000000000013 /* Info.plist */,
 			);
-			path = RemoteDeskMac;
+			path = RemoteSessionMgr;
 			sourceTree = SOURCE_ROOT;
 		};
 		00400000000000000000000B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				002000000000000000000014 /* RemoteDeskMac.app */,
+				002000000000000000000014 /* RemoteSessionMgr.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,9 +179,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		005000000000000000000001 /* RemoteDeskMac */ = {
+		005000000000000000000001 /* RemoteSessionMgr */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 009000000000000000000001 /* Build configuration list for PBXNativeTarget "RemoteDeskMac" */;
+			buildConfigurationList = 009000000000000000000001 /* Build configuration list for PBXNativeTarget "RemoteSessionMgr" */;
 			buildPhases = (
 				006000000000000000000001 /* Sources */,
 				003000000000000000000001 /* Frameworks */,
@@ -191,12 +191,12 @@
 			);
 			dependencies = (
 			);
-			name = RemoteDeskMac;
+			name = RemoteSessionMgr;
 			packageProductDependencies = (
 				00B000000000000000000001 /* SwiftTerm */,
 			);
-			productName = RemoteDeskMac;
-			productReference = 002000000000000000000014 /* RemoteDeskMac.app */;
+			productName = RemoteSessionMgr;
+			productReference = 002000000000000000000014 /* RemoteSessionMgr.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +214,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 009000000000000000000002 /* Build configuration list for PBXProject "RemoteDeskMac" */;
+			buildConfigurationList = 009000000000000000000002 /* Build configuration list for PBXProject "RemoteSessionMgr" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -230,7 +230,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				005000000000000000000001 /* RemoteDeskMac */,
+				005000000000000000000001 /* RemoteSessionMgr */,
 			);
 		};
 /* End PBXProject section */
@@ -250,7 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				001000000000000000000001 /* RemoteDeskMacApp.swift in Sources */,
+				001000000000000000000001 /* RemoteSessionMgrApp.swift in Sources */,
 				001000000000000000000002 /* AppSettings.swift in Sources */,
 				001000000000000000000003 /* RemoteSession.swift in Sources */,
 				001000000000000000000004 /* SessionFolder.swift in Sources */,
@@ -306,14 +306,14 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = RemoteDeskMac/Info.plist;
+				INFOPLIST_FILE = RemoteSessionMgr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.prashanth.RemoteDeskMac;
+				PRODUCT_BUNDLE_IDENTIFIER = com.prashanth.RemoteSessionMgr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -333,14 +333,14 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = RemoteDeskMac/Info.plist;
+				INFOPLIST_FILE = RemoteSessionMgr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.prashanth.RemoteDeskMac;
+				PRODUCT_BUNDLE_IDENTIFIER = com.prashanth.RemoteSessionMgr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -397,7 +397,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		009000000000000000000001 /* Build configuration list for PBXNativeTarget "RemoteDeskMac" */ = {
+		009000000000000000000001 /* Build configuration list for PBXNativeTarget "RemoteSessionMgr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				008000000000000000000001 /* Debug */,
@@ -406,7 +406,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		009000000000000000000002 /* Build configuration list for PBXProject "RemoteDeskMac" */ = {
+		009000000000000000000002 /* Build configuration list for PBXProject "RemoteSessionMgr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				008000000000000000000003 /* Debug */,

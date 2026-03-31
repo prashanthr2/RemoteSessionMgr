@@ -4,26 +4,28 @@
 import PackageDescription
 
 let package = Package(
-    name: "RemoteDeskMac",
+    name: "RemoteSessionMgr",
     platforms: [
         .macOS(.v13)
     ],
     products: [
-        .executable(name: "RemoteDeskMac", targets: ["RemoteDeskMac"])
+        .executable(name: "RemoteSessionMgr", targets: ["RemoteSessionMgr"])
     ],
     dependencies: [
         .package(path: "Vendor/SwiftTerm")
     ],
     targets: [
         .executableTarget(
-            name: "RemoteDeskMac",
+            name: "RemoteSessionMgr",
             dependencies: [
                 .product(name: "SwiftTerm", package: "SwiftTerm")
-            ]
+            ],
+            path: "Sources/RemoteSessionMgr"
         ),
         .testTarget(
-            name: "RemoteDeskMacTests",
-            dependencies: ["RemoteDeskMac"]
+            name: "RemoteSessionMgrTests",
+            dependencies: ["RemoteSessionMgr"],
+            path: "Tests/RemoteSessionMgrTests"
         ),
     ],
     swiftLanguageVersions: [.v5]

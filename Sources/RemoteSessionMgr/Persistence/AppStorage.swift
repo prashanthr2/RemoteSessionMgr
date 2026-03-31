@@ -6,7 +6,7 @@ struct AppStorage {
 
     init(fileManager: FileManager = .default) {
         let baseURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("RemoteDeskMac", isDirectory: true)
+            .appendingPathComponent("RemoteSessionMgr", isDirectory: true)
         libraryStore = JSONFileStore(fileURL: baseURL.appendingPathComponent("sessions.json"))
         settingsStore = JSONFileStore(fileURL: baseURL.appendingPathComponent("settings.json"))
     }

@@ -1,7 +1,7 @@
 import XCTest
-@testable import RemoteDeskMac
+@testable import RemoteSessionMgr
 
-final class RemoteDeskMacTests: XCTestCase {
+final class RemoteSessionMgrTests: XCTestCase {
     func testSampleDataContainsExpectedProtocols() {
         let library = SampleData.makeLibrary()
         let root = library.rootFolder

@@ -21,7 +21,7 @@ struct ContentView: View {
             .background(Color(NSColor.windowBackgroundColor))
         }
         .navigationSplitViewStyle(.balanced)
-        .navigationTitle("RemoteDeskMac")
+        .navigationTitle("RemoteSessionMgr")
         .toolbar {
             ToolbarItemGroup {
                 Button {

@@ -1,6 +1,6 @@
-# RemoteDeskMac
+# RemoteSessionMgr
 
-RemoteDeskMac is a native macOS SwiftUI app for managing personal SSH and RDP sessions. It is inspired by the workflow of remote session managers like mRemoteNG, but this implementation is written from scratch for macOS and only targets SSH and RDP for v1.
+RemoteSessionMgr is a native macOS SwiftUI app for managing personal SSH and RDP sessions. It is inspired by the workflow of remote session managers like mRemoteNG, but this implementation is written from scratch for macOS and only targets SSH and RDP for v1.
 
 ## Features
 
@@ -16,7 +16,7 @@ RemoteDeskMac is a native macOS SwiftUI app for managing personal SSH and RDP se
 ## Project Structure
 
 ```text
-Sources/RemoteDeskMac
+Sources/RemoteSessionMgr
 ├── Launchers
 ├── Models
 ├── Persistence
@@ -41,7 +41,7 @@ The app follows a lightweight MVVM structure:
 2. Choose `File > Open...`.
 3. Select `/Users/prashanth/Documents/Playground/Package.swift`.
 4. Let Xcode resolve and load the package.
-5. Run the `RemoteDeskMac` executable target on `My Mac`.
+5. Run the `RemoteSessionMgr` executable target on `My Mac`.
 
 ### Option 2: Build from Terminal
 
@@ -58,7 +58,7 @@ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
 ## SSH Launching
 
-SSH connections use the system `ssh` command. RemoteDeskMac does not implement the SSH protocol itself.
+SSH connections use the system `ssh` command. RemoteSessionMgr does not implement the SSH protocol itself.
 
 For a session with:
 
@@ -79,7 +79,7 @@ The default SSH launcher is configurable in Settings:
 
 ## RDP Launching
 
-RDP is delegated to an external client. RemoteDeskMac does not render RDP sessions natively.
+RDP is delegated to an external client. RemoteSessionMgr does not render RDP sessions natively.
 
 By default, the app uses this command template:
 
@@ -110,8 +110,8 @@ open -a "Microsoft Remote Desktop" "rdp://full%20address=s:{host}"
 The app stores JSON files in the user Application Support directory:
 
 ```text
-~/Library/Application Support/RemoteDeskMac/sessions.json
-~/Library/Application Support/RemoteDeskMac/settings.json
+~/Library/Application Support/RemoteSessionMgr/sessions.json
+~/Library/Application Support/RemoteSessionMgr/settings.json
 ```
 
 On first launch, the app writes:

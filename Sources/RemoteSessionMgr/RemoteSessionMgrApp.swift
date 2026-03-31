@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct RemoteDeskMacApp: App {
+struct RemoteSessionMgrApp: App {
     @StateObject private var viewModel = AppViewModel()
 
     var body: some Scene {
