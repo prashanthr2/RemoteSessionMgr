@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		001000000000000000000001 /* RemoteDeskMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000001 /* RemoteDeskMacApp.swift */; };
+		001000000000000000000002 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000002 /* AppSettings.swift */; };
+		001000000000000000000003 /* RemoteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000003 /* RemoteSession.swift */; };
+		001000000000000000000004 /* SessionFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000004 /* SessionFolder.swift */; };
+		001000000000000000000005 /* SidebarSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000005 /* SidebarSelection.swift */; };
+		001000000000000000000013 /* EmbeddedSSHSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000015 /* EmbeddedSSHSession.swift */; };
+		001000000000000000000014 /* SSHConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000016 /* SSHConsoleView.swift */; };
+		001000000000000000000015 /* SSHTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000017 /* SSHTabBarView.swift */; };
+		001000000000000000000016 /* SwiftTermContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000018 /* SwiftTermContainerView.swift */; };
+		001000000000000000000006 /* AppStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000006 /* AppStorage.swift */; };
+		001000000000000000000007 /* JSONFileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000007 /* JSONFileStore.swift */; };
+		001000000000000000000008 /* RDPLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000008 /* RDPLauncher.swift */; };
+		001000000000000000000009 /* SSHLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000009 /* SSHLauncher.swift */; };
+		00100000000000000000000A /* SessionLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000000A /* SessionLauncher.swift */; };
+		00100000000000000000000B /* ShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000000B /* ShellCommand.swift */; };
+		001000000000000000000017 /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = 00B000000000000000000001 /* SwiftTerm */; };
+		00100000000000000000000C /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000000C /* AppViewModel.swift */; };
+		00100000000000000000000D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000000D /* ContentView.swift */; };
+		00100000000000000000000E /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000000E /* EmptyStateView.swift */; };
+		00100000000000000000000F /* FolderInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000000F /* FolderInspectorView.swift */; };
+		001000000000000000000010 /* SessionEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000010 /* SessionEditorView.swift */; };
+		001000000000000000000011 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000011 /* SettingsView.swift */; };
+		001000000000000000000012 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000012 /* SidebarView.swift */; };
+		001000000000000000000018 /* SidebarInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000019 /* SidebarInspectorView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		002000000000000000000001 /* RemoteDeskMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDeskMacApp.swift; sourceTree = "<group>"; };
+		002000000000000000000002 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		002000000000000000000003 /* RemoteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSession.swift; sourceTree = "<group>"; };
+		002000000000000000000004 /* SessionFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFolder.swift; sourceTree = "<group>"; };
+		002000000000000000000005 /* SidebarSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarSelection.swift; sourceTree = "<group>"; };
+		002000000000000000000015 /* EmbeddedSSHSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedSSHSession.swift; sourceTree = "<group>"; };
+		002000000000000000000016 /* SSHConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHConsoleView.swift; sourceTree = "<group>"; };
+		002000000000000000000017 /* SSHTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHTabBarView.swift; sourceTree = "<group>"; };
+		002000000000000000000018 /* SwiftTermContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTermContainerView.swift; sourceTree = "<group>"; };
+		002000000000000000000006 /* AppStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorage.swift; sourceTree = "<group>"; };
+		002000000000000000000007 /* JSONFileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFileStore.swift; sourceTree = "<group>"; };
+		002000000000000000000008 /* RDPLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDPLauncher.swift; sourceTree = "<group>"; };
+		002000000000000000000009 /* SSHLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHLauncher.swift; sourceTree = "<group>"; };
+		00200000000000000000000A /* SessionLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLauncher.swift; sourceTree = "<group>"; };
+		00200000000000000000000B /* ShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellCommand.swift; sourceTree = "<group>"; };
+		00200000000000000000000C /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		00200000000000000000000D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		00200000000000000000000E /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		00200000000000000000000F /* FolderInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderInspectorView.swift; sourceTree = "<group>"; };
+		002000000000000000000010 /* SessionEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEditorView.swift; sourceTree = "<group>"; };
+		002000000000000000000011 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		002000000000000000000012 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		002000000000000000000019 /* SidebarInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarInspectorView.swift; sourceTree = "<group>"; };
+		002000000000000000000013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		002000000000000000000014 /* RemoteDeskMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoteDeskMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		003000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001000000000000000000017 /* SwiftTerm in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		004000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				004000000000000000000002 /* Sources */,
+				00400000000000000000000A /* RemoteDeskMac */,
+				00400000000000000000000B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		004000000000000000000002 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				004000000000000000000003 /* Launchers */,
+				004000000000000000000004 /* Models */,
+				004000000000000000000005 /* Persistence */,
+				002000000000000000000001 /* RemoteDeskMacApp.swift */,
+				004000000000000000000006 /* Utilities */,
+				004000000000000000000007 /* ViewModels */,
+				004000000000000000000008 /* Views */,
+			);
+			path = Sources/RemoteDeskMac;
+			sourceTree = SOURCE_ROOT;
+		};
+		004000000000000000000003 /* Launchers */ = {
+			isa = PBXGroup;
+			children = (
+				002000000000000000000008 /* RDPLauncher.swift */,
+				002000000000000000000009 /* SSHLauncher.swift */,
+				00200000000000000000000A /* SessionLauncher.swift */,
+			);
+			path = Launchers;
+			sourceTree = "<group>";
+		};
+		004000000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				002000000000000000000002 /* AppSettings.swift */,
+				002000000000000000000015 /* EmbeddedSSHSession.swift */,
+				002000000000000000000003 /* RemoteSession.swift */,
+				002000000000000000000004 /* SessionFolder.swift */,
+				002000000000000000000005 /* SidebarSelection.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		004000000000000000000005 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				002000000000000000000006 /* AppStorage.swift */,
+				002000000000000000000007 /* JSONFileStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		004000000000000000000006 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				00200000000000000000000B /* ShellCommand.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		004000000000000000000007 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				00200000000000000000000C /* AppViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		004000000000000000000008 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				00200000000000000000000D /* ContentView.swift */,
+				00200000000000000000000E /* EmptyStateView.swift */,
+				00200000000000000000000F /* FolderInspectorView.swift */,
+				002000000000000000000016 /* SSHConsoleView.swift */,
+				002000000000000000000017 /* SSHTabBarView.swift */,
+				002000000000000000000018 /* SwiftTermContainerView.swift */,
+				002000000000000000000010 /* SessionEditorView.swift */,
+				002000000000000000000011 /* SettingsView.swift */,
+				002000000000000000000019 /* SidebarInspectorView.swift */,
+				002000000000000000000012 /* SidebarView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		00400000000000000000000A /* RemoteDeskMac */ = {
+			isa = PBXGroup;
+			children = (
+				002000000000000000000013 /* Info.plist */,
+			);
+			path = RemoteDeskMac;
+			sourceTree = SOURCE_ROOT;
+		};
+		00400000000000000000000B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				002000000000000000000014 /* RemoteDeskMac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		005000000000000000000001 /* RemoteDeskMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 009000000000000000000001 /* Build configuration list for PBXNativeTarget "RemoteDeskMac" */;
+			buildPhases = (
+				006000000000000000000001 /* Sources */,
+				003000000000000000000001 /* Frameworks */,
+				006000000000000000000002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RemoteDeskMac;
+			packageProductDependencies = (
+				00B000000000000000000001 /* SwiftTerm */,
+			);
+			productName = RemoteDeskMac;
+			productReference = 002000000000000000000014 /* RemoteDeskMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		007000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					005000000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 009000000000000000000002 /* Build configuration list for PBXProject "RemoteDeskMac" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 004000000000000000000001;
+			packageReferences = (
+				00A000000000000000000001 /* XCLocalSwiftPackageReference "Vendor/SwiftTerm" */,
+			);
+			productRefGroup = 00400000000000000000000B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				005000000000000000000001 /* RemoteDeskMac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		006000000000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		006000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001000000000000000000001 /* RemoteDeskMacApp.swift in Sources */,
+				001000000000000000000002 /* AppSettings.swift in Sources */,
+				001000000000000000000003 /* RemoteSession.swift in Sources */,
+				001000000000000000000004 /* SessionFolder.swift in Sources */,
+				001000000000000000000005 /* SidebarSelection.swift in Sources */,
+				001000000000000000000013 /* EmbeddedSSHSession.swift in Sources */,
+				001000000000000000000006 /* AppStorage.swift in Sources */,
+				001000000000000000000007 /* JSONFileStore.swift in Sources */,
+				001000000000000000000008 /* RDPLauncher.swift in Sources */,
+				001000000000000000000009 /* SSHLauncher.swift in Sources */,
+				00100000000000000000000A /* SessionLauncher.swift in Sources */,
+				00100000000000000000000B /* ShellCommand.swift in Sources */,
+				00100000000000000000000C /* AppViewModel.swift in Sources */,
+				00100000000000000000000D /* ContentView.swift in Sources */,
+				00100000000000000000000E /* EmptyStateView.swift in Sources */,
+				00100000000000000000000F /* FolderInspectorView.swift in Sources */,
+				001000000000000000000014 /* SSHConsoleView.swift in Sources */,
+				001000000000000000000015 /* SSHTabBarView.swift in Sources */,
+				001000000000000000000016 /* SwiftTermContainerView.swift in Sources */,
+				001000000000000000000010 /* SessionEditorView.swift in Sources */,
+				001000000000000000000011 /* SettingsView.swift in Sources */,
+				001000000000000000000018 /* SidebarInspectorView.swift in Sources */,
+				001000000000000000000012 /* SidebarView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		00A000000000000000000001 /* XCLocalSwiftPackageReference "Vendor/SwiftTerm" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Vendor/SwiftTerm;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		00B000000000000000000001 /* SwiftTerm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00A000000000000000000001 /* XCLocalSwiftPackageReference "Vendor/SwiftTerm" */;
+			productName = SwiftTerm;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCBuildConfiguration section */
+		008000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RemoteDeskMac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.prashanth.RemoteDeskMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		008000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RemoteDeskMac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.prashanth.RemoteDeskMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		008000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		008000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		009000000000000000000001 /* Build configuration list for PBXNativeTarget "RemoteDeskMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				008000000000000000000001 /* Debug */,
+				008000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		009000000000000000000002 /* Build configuration list for PBXProject "RemoteDeskMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				008000000000000000000003 /* Debug */,
+				008000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 007000000000000000000001 /* Project object */;
+}
