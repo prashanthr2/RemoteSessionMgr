@@ -22,41 +22,50 @@ struct ContentView: View {
             .background(Color(NSColor.windowBackgroundColor))
         }
         .navigationSplitViewStyle(.balanced)
-        .navigationTitle("RemoteSessionMgr")
-        .toolbar {
-            ToolbarItemGroup {
+        .toolbar(id: "mainToolbar") {
+            ToolbarItem(id: "newSession", placement: .primaryAction) {
                 Button {
                     viewModel.newSession()
                 } label: {
                     Label("New Session", systemImage: "plus.rectangle.on.rectangle")
                 }
-
+                .help("New Session")
+            }
+            ToolbarItem(id: "newFolder", placement: .primaryAction) {
                 Button {
                     viewModel.newFolder()
                 } label: {
                     Label("New Folder", systemImage: "folder.badge.plus")
                 }
-
+                .help("New Folder")
+            }
+            ToolbarItem(id: "import", placement: .primaryAction) {
                 Button {
                     openImportPanel()
                 } label: {
                     Label("Import mRemoteNG", systemImage: "square.and.arrow.down")
                 }
-
-                Button(role: .destructive) {
+                .help("Import mRemoteNG XML")
+            }
+            ToolbarItem(id: "delete", placement: .primaryAction) {
+                Button {
                     viewModel.deleteSelectedItem()
                 } label: {
                     Label("Delete", systemImage: "trash")
                 }
                 .disabled(viewModel.selection == nil)
-
+                .help("Delete selected item")
+            }
+            ToolbarItem(id: "connect", placement: .primaryAction) {
                 Button {
                     viewModel.connectSelectedSession()
                 } label: {
                     Label("Connect", systemImage: "bolt.horizontal.circle")
                 }
                 .disabled(viewModel.selectedSession == nil)
-
+                .help("Connect to selected session")
+            }
+            ToolbarItem(id: "settings", placement: .primaryAction) {
                 if #available(macOS 14.0, *) {
                     SettingsLink {
                         Label("Settings", systemImage: "gearshape")
