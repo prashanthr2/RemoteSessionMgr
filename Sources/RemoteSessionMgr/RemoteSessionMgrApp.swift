@@ -25,7 +25,7 @@ struct RemoteSessionMgrApp: App {
 }
 
 struct AppCommands: Commands {
-    let viewModel: AppViewModel
+    @ObservedObject var viewModel: AppViewModel
 
     var body: some Commands {
         CommandGroup(after: .newItem) {
