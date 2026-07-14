@@ -5,46 +5,67 @@ struct SSHTabBarView: View {
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
+            HStack(spacing: 4) {
                 detailsTab
+
+                // Vertical separator between Details and SSH tabs
+                if !viewModel.sshTabs.isEmpty {
+                    Divider()
+                        .frame(height: 28)
+                        .padding(.horizontal, 2)
+                }
 
                 ForEach(viewModel.sshTabs) { tab in
                     sessionTab(for: tab)
                 }
             }
             .padding(.horizontal, 10)
+            .padding(.vertical, 6)
         }
-        .background(Color(NSColor.windowBackgroundColor))
+        .frame(height: 52)
+        .background(Color(NSColor.controlBackgroundColor))
+        .overlay(alignment: .bottom) {
+            Divider()
+        }
     }
 
     private var detailsTab: some View {
-        attachedTab(
+        tabButton(
             isSelected: isDetailsSelected,
             onSelect: { viewModel.showDetailsPane() }
         ) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Details")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                Text(detailsSubtitle)
-                    .font(.caption2)
+            Label {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Details")
+                        .font(.system(size: 12, weight: .medium))
+                    Text(detailsSubtitle)
+                        .font(.system(size: 10))
+                        .foregroundStyle(.secondary)
+                }
+            } icon: {
+                Image(systemName: "sidebar.right")
+                    .font(.system(size: 11))
                     .foregroundStyle(.secondary)
             }
         }
     }
 
     private func sessionTab(for tab: EmbeddedSSHSession) -> some View {
-        attachedTab(
+        tabButton(
             isSelected: isSelected(tab.id),
             onSelect: { viewModel.selectSSHTab(tab.id) }
         ) {
-            HStack(spacing: 8) {
-                VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 6) {
+                Image(systemName: "terminal")
+                    .font(.system(size: 11))
+                    .foregroundStyle(isSelected(tab.id) ? Color.accentColor : .secondary)
+
+                VStack(alignment: .leading, spacing: 1) {
                     Text(tab.title)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                        .font(.system(size: 12, weight: .medium))
+                        .lineLimit(1)
                     Text(tab.state.label)
-                        .font(.caption2)
+                        .font(.system(size: 10))
                         .foregroundStyle(.secondary)
                 }
 
@@ -52,35 +73,39 @@ struct SSHTabBarView: View {
                     viewModel.closeSSHTab(tab.id)
                 } label: {
                     Image(systemName: "xmark")
-                        .font(.system(size: 10, weight: .bold))
-                        .padding(4)
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(.secondary)
+                        .padding(3)
+                        .background(Color.primary.opacity(0.08), in: Circle())
                 }
                 .buttonStyle(.plain)
             }
         }
     }
 
-    private func attachedTab<Content: View>(
+    private func tabButton<Content: View>(
         isSelected: Bool,
         onSelect: @escaping () -> Void,
         @ViewBuilder content: () -> Content
     ) -> some View {
         Button(action: onSelect) {
-            VStack(spacing: 0) {
-                HStack {
-                    content()
-                    Spacer(minLength: 0)
-                }
-                .padding(.horizontal, 14)
-                .padding(.top, 10)
-                .padding(.bottom, 9)
-                .frame(minWidth: 118, alignment: .leading)
-
-                Rectangle()
-                    .fill(isSelected ? Color.accentColor : Color.clear)
-                    .frame(height: 2)
-            }
-            .background(isSelected ? Color.primary.opacity(0.05) : Color.clear)
+            content()
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .frame(minWidth: 110, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(isSelected
+                              ? Color(NSColor.selectedControlColor).opacity(0.45)
+                              : Color.clear)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .strokeBorder(
+                            isSelected ? Color.accentColor.opacity(0.4) : Color.clear,
+                            lineWidth: 1
+                        )
+                )
         }
         .buttonStyle(.plain)
     }

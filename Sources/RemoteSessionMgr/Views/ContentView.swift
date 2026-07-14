@@ -1,8 +1,10 @@
 import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ContentView: View {
     @EnvironmentObject private var viewModel: AppViewModel
+    @State private var showingImportPanel = false
 
     var body: some View {
         NavigationSplitView {
@@ -12,10 +14,11 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 if !viewModel.sshTabs.isEmpty {
                     SSHTabBarView()
-                    Divider()
                 }
 
                 detailPane
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(Color(NSColor.windowBackgroundColor))
@@ -34,6 +37,12 @@ struct ContentView: View {
                     viewModel.newFolder()
                 } label: {
                     Label("New Folder", systemImage: "folder.badge.plus")
+                }
+
+                Button {
+                    openImportPanel()
+                } label: {
+                    Label("Import mRemoteNG", systemImage: "square.and.arrow.down")
                 }
 
                 Button {
@@ -75,6 +84,19 @@ struct ContentView: View {
             FolderInspectorView(folderID: folder.id)
         } else {
             EmptyStateView()
+        }
+    }
+
+    private func openImportPanel() {
+        let panel = NSOpenPanel()
+        panel.title = "Import mRemoteNG Connections"
+        panel.message = "Select your mRemoteNG confCons.xml file"
+        panel.allowedContentTypes = [.xml]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+
+        if panel.runModal() == .OK, let url = panel.url {
+            viewModel.importMRemoteNG(from: url)
         }
     }
 }

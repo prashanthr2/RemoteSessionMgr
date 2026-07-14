@@ -91,6 +91,19 @@ final class AppViewModel: ObservableObject {
         selection = .session(session.id)
     }
 
+    func importMRemoteNG(from url: URL) {
+        do {
+            let imported = try MRemoteNGImporter.importFolder(from: url)
+            mutateRoot { root in
+                root.folders.append(imported)
+                root.folders.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+            }
+            selection = .folder(imported.id)
+        } catch {
+            presentedError = DisplayError(message: "Import failed: \(error.localizedDescription)")
+        }
+    }
+
     func newFolder() {
         let parentFolderID = preferredFolderIDForInsertion()
         let folder = SessionFolder(name: "New Folder")
