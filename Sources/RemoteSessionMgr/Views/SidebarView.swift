@@ -15,6 +15,9 @@ struct SidebarView: View {
             }
             .listStyle(.sidebar)
             .searchable(text: $viewModel.searchText, placement: .sidebar, prompt: "Search sessions")
+            .onDeleteCommand {
+                viewModel.deleteSelectedItem()
+            }
 
             SidebarInspectorView()
                 .frame(minHeight: 260, idealHeight: 320)
@@ -36,6 +39,22 @@ struct SidebarView: View {
         case .folder:
             Label(node.title, systemImage: "folder")
                 .font(.body)
+                .contextMenu {
+                    Button("New Session in Folder") {
+                        viewModel.handleSelectionChange(node.id)
+                        viewModel.newSession()
+                    }
+                    Button("New Subfolder") {
+                        viewModel.handleSelectionChange(node.id)
+                        viewModel.newFolder()
+                    }
+                    Divider()
+                    Button("Delete Folder", role: .destructive) {
+                        viewModel.handleSelectionChange(node.id)
+                        viewModel.deleteSelectedItem()
+                    }
+                }
+
         case .session:
             VStack(alignment: .leading, spacing: 2) {
                 Label(node.title, systemImage: "desktopcomputer")
@@ -53,6 +72,18 @@ struct SidebarView: View {
             .onTapGesture(count: 2) {
                 if case .session(let sessionID) = node.id {
                     viewModel.connectSession(withID: sessionID)
+                }
+            }
+            .contextMenu {
+                Button("Connect") {
+                    if case .session(let sessionID) = node.id {
+                        viewModel.connectSession(withID: sessionID)
+                    }
+                }
+                Divider()
+                Button("Delete Session", role: .destructive) {
+                    viewModel.handleSelectionChange(node.id)
+                    viewModel.deleteSelectedItem()
                 }
             }
         }
