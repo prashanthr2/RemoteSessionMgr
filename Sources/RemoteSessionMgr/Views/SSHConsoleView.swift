@@ -6,7 +6,6 @@ struct SSHConsoleView: View {
     var body: some View {
         SwiftTermContainerView(tab: tab)
             .id(tab.id)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.black)
     }
 }
