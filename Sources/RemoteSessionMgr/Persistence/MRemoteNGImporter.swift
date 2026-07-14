@@ -1,34 +1,40 @@
+import CommonCrypto
+import CryptoKit
 import Foundation
 
 /// Parses an mRemoteNG confCons.xml file and converts it into
 /// the app's SessionFolder / RemoteSession model hierarchy.
+///
+/// mRemoteNG encrypts passwords with AES-256-GCM using a PBKDF2-derived key.
+/// We attempt decryption using an empty master password (the default when the
+/// user has not set one). If decryption fails the password is left blank so
+/// the user can fill it in manually.
 enum MRemoteNGImporter {
 
     enum ImportError: LocalizedError {
         case unreadableFile
-        case invalidXML
         case noConnectionsRoot
 
         var errorDescription: String? {
             switch self {
-            case .unreadableFile:  return "Could not read the selected file."
-            case .invalidXML:     return "The file does not contain valid XML."
-            case .noConnectionsRoot: return "No <Connections> root element found. Make sure this is a valid mRemoteNG confCons.xml file."
+            case .unreadableFile:       return "Could not read the selected file."
+            case .noConnectionsRoot:    return "No <Connections> root found. Make sure this is a valid mRemoteNG confCons.xml."
             }
         }
     }
 
     // MARK: – Public entry point
 
-    /// Parse the given file URL and return a SessionFolder tree.
-    /// The returned folder's name is taken from the XML root's `Name` attribute
-    /// (defaulting to "Imported"). Merge this into the library as you see fit.
-    static func importFolder(from url: URL) throws -> SessionFolder {
+    /// Import sessions from a confCons.xml file.
+    /// - Parameters:
+    ///   - url: Path to confCons.xml
+    ///   - masterPassword: The mRemoteNG master password. Leave empty if you
+    ///     did not set one in mRemoteNG (the most common case).
+    static func importFolder(from url: URL, masterPassword: String = "") throws -> SessionFolder {
         guard let data = try? Data(contentsOf: url) else {
             throw ImportError.unreadableFile
         }
-
-        let parser = MRemoteNGXMLParser()
+        let parser = MRemoteNGXMLParser(masterPassword: masterPassword)
         guard let root = try parser.parse(data: data) else {
             throw ImportError.noConnectionsRoot
         }
@@ -40,20 +46,20 @@ enum MRemoteNGImporter {
 
 private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
 
-    // Each level of the stack represents a folder being built.
-    // We push when we enter a Container node and pop when we leave it.
+    private let masterPassword: String
+    private var kdfIterations: Int = 1000
     private var folderStack: [SessionFolder] = []
     private var parseError: Error?
+
+    init(masterPassword: String) {
+        self.masterPassword = masterPassword
+    }
 
     func parse(data: Data) throws -> SessionFolder? {
         let xmlParser = XMLParser(data: data)
         xmlParser.delegate = self
         xmlParser.parse()
-
         if let err = parseError { throw err }
-
-        // After parsing the whole document the stack should contain exactly
-        // the root folder we built for the <Connections> element.
         return folderStack.first
     }
 
@@ -68,22 +74,22 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
     ) {
         let localName = stripNamespace(elementName)
 
-        // The root element is <mrng:Connections> or <Connections>.
-        // We treat it exactly like a Container.
         if localName == "Connections" {
+            // Read the KDF iteration count from the root element (default 1000)
+            if let iters = attributes["KdfIterations"].flatMap(Int.init) {
+                kdfIterations = iters
+            }
             let name = attributes["Name"] ?? "Imported Connections"
             folderStack.append(SessionFolder(name: name))
             return
         }
 
         guard localName == "Node" else { return }
-
         let type = attributes["Type"] ?? ""
 
         switch type {
         case "Container":
-            let name = attributes["Name"] ?? "Folder"
-            folderStack.append(SessionFolder(name: name))
+            folderStack.append(SessionFolder(name: attributes["Name"] ?? "Folder"))
 
         case "Connection":
             guard !folderStack.isEmpty else { return }
@@ -103,58 +109,46 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
         qualifiedName qName: String?
     ) {
         let localName = stripNamespace(elementName)
-
-        // When a Container (or the root Connections) closes, pop it and
-        // attach it as a child of the folder below it in the stack.
         guard localName == "Connections" || (localName == "Node" && folderStack.count > 1) else { return }
-
-        // Only pop if there's something above the root to attach to.
         if folderStack.count > 1 {
             let finished = folderStack.removeLast()
             folderStack[folderStack.count - 1].folders.append(finished)
         }
-        // When Connections closes and there's only the root left, leave it.
     }
 
-    func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-        self.parseError = parseError
+    func parser(_ parser: XMLParser, parseErrorOccurred error: Error) {
+        parseError = error
     }
 
     // MARK: – Helpers
 
     private func stripNamespace(_ name: String) -> String {
-        // mRemoteNG uses "mrng:Connections" – strip the prefix.
         if let colon = name.firstIndex(of: ":") {
             return String(name[name.index(after: colon)...])
         }
         return name
     }
 
-    /// Map mRemoteNG connection attributes → RemoteSession.
     private func buildSession(from attrs: [String: String]) -> RemoteSession? {
-        let name     = attrs["Name"] ?? "Unnamed"
-        let hostname = attrs["Hostname"] ?? ""
+        let name      = attrs["Name"] ?? "Unnamed"
+        let hostname  = attrs["Hostname"] ?? ""
         guard !hostname.isEmpty else { return nil }
 
-        let username = attrs["Username"] ?? ""
-        let password = attrs["Password"] ?? ""
-        let portStr  = attrs["Port"] ?? ""
-        let protocol_ = attrs["Protocol"] ?? "SSH2"
-        let notes    = attrs["Description"] ?? ""
+        let username  = attrs["Username"] ?? ""
+        let rawPw     = attrs["Password"] ?? ""
+        let portStr   = attrs["Port"] ?? ""
+        let proto_    = attrs["Protocol"] ?? "SSH2"
+        let notes     = attrs["Description"] ?? ""
 
         let proto: SessionProtocol
-        switch protocol_.uppercased() {
-        case "RDP":
-            proto = .rdp
-        case "SSH1", "SSH2":
-            proto = .ssh
-        default:
-            // Skip unsupported protocol types (VNC, Telnet, etc.)
-            // but still try to import as SSH if we can't tell.
-            proto = .ssh
+        switch proto_.uppercased() {
+        case "RDP":             proto = .rdp
+        case "SSH1", "SSH2":   proto = .ssh
+        default:                proto = .ssh
         }
 
-        let port = Int(portStr) ?? proto.defaultPort
+        let port     = Int(portStr) ?? proto.defaultPort
+        let password = decryptPassword(rawPw) ?? ""
 
         return RemoteSession(
             name: name,
@@ -165,5 +159,63 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
             password: password,
             notes: notes
         )
+    }
+
+    // MARK: – AES-GCM decryption
+
+    /// mRemoteNG password format (Base64):
+    ///   salt[16] | IV[16] | ciphertext[N] | GCM-tag[16]
+    /// Key = PBKDF2-HMAC-SHA1(masterPassword, salt, kdfIterations, keyLen=32)
+    private func decryptPassword(_ base64: String) -> String? {
+        guard !base64.isEmpty else { return "" }
+
+        // If the value isn't valid base64 or is too short it's likely
+        // already plaintext (very old confCons.xml format).
+        guard let data = Data(base64Encoded: base64, options: .ignoreUnknownCharacters),
+              data.count >= 48 else {
+            return base64
+        }
+
+        let salt       = data[0..<16]
+        let iv         = data[16..<32]
+        let ciphertext = data[32..<(data.count - 16)]
+        let tag        = data[(data.count - 16)...]
+
+        // Derive 256-bit key via PBKDF2-HMAC-SHA1
+        guard let derivedKey = pbkdf2(password: masterPassword, salt: salt, iterations: kdfIterations) else {
+            return nil
+        }
+
+        // AES-256-GCM decrypt
+        do {
+            let symKey    = SymmetricKey(data: derivedKey)
+            let nonce     = try AES.GCM.Nonce(data: iv)
+            let sealedBox = try AES.GCM.SealedBox(nonce: nonce, ciphertext: ciphertext, tag: tag)
+            let plain     = try AES.GCM.open(sealedBox, using: symKey)
+            return String(data: plain, encoding: .utf8)
+        } catch {
+            // Key was wrong (wrong master password) or data is corrupt — return nil
+            return nil
+        }
+    }
+
+    /// PBKDF2-HMAC-SHA1, output 32 bytes.
+    private func pbkdf2(password: String, salt: Data, iterations: Int) -> Data? {
+        guard let passwordData = password.data(using: .utf8) else { return nil }
+        var derivedKey = [UInt8](repeating: 0, count: 32)
+
+        let status: Int32 = passwordData.withUnsafeBytes { pwBytes in
+            salt.withUnsafeBytes { saltBytes in
+                CCKeyDerivationPBKDF(
+                    CCPBKDFAlgorithm(kCCPBKDF2),
+                    pwBytes.baseAddress, pwBytes.count,
+                    saltBytes.baseAddress, saltBytes.count,
+                    CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA1),
+                    UInt32(iterations),
+                    &derivedKey, derivedKey.count
+                )
+            }
+        }
+        return status == kCCSuccess ? Data(derivedKey) : nil
     }
 }
