@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
+import class SwiftTerm.TerminalView
 
 struct SidebarView: View {
     @EnvironmentObject private var viewModel: AppViewModel
@@ -125,7 +126,7 @@ struct SidebarView: View {
                   event.modifierFlags.intersection(.deviceIndependentFlagsMask).isEmpty,
                   viewModel.selection != nil else { return event }
             let responder = NSApp.keyWindow?.firstResponder
-            let isTextInput = responder is NSTextView || responder is NSTextField
+            let isTextInput = responder is NSTextView || responder is NSTextField || responder is TerminalView
             guard !isTextInput else { return event }
             viewModel.deleteSelectedItem()
             return nil
