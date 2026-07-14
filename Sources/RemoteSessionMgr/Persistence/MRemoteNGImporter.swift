@@ -6,10 +6,15 @@ import Foundation
 /// the app's SessionFolder / RemoteSession model hierarchy.
 ///
 /// mRemoteNG encrypts passwords with AES-256-GCM using a PBKDF2-derived key.
-/// We attempt decryption using an empty master password (the default when the
-/// user has not set one). If decryption fails the password is left blank so
-/// the user can fill it in manually.
+/// When the user has not set a custom master password, mRemoteNG derives the
+/// key from the hardcoded string "mR3m" (its documented default), not an
+/// empty string. We attempt decryption using that default. If decryption
+/// fails (e.g. a custom master password was actually set) the password is
+/// left blank so the user can fill it in manually.
 enum MRemoteNGImporter {
+
+    /// The key mRemoteNG derives from when no custom master password has been set.
+    static let defaultMasterPassword = "mR3m"
 
     enum ImportError: LocalizedError {
         case unreadableFile
@@ -28,9 +33,10 @@ enum MRemoteNGImporter {
     /// Import sessions from a confCons.xml file.
     /// - Parameters:
     ///   - url: Path to confCons.xml
-    ///   - masterPassword: The mRemoteNG master password. Leave empty if you
-    ///     did not set one in mRemoteNG (the most common case).
-    static func importFolder(from url: URL, masterPassword: String = "") throws -> SessionFolder {
+    ///   - masterPassword: The mRemoteNG master password. Defaults to
+    ///     mRemoteNG's own default key, used when the user did not set a
+    ///     custom master password (the most common case).
+    static func importFolder(from url: URL, masterPassword: String = defaultMasterPassword) throws -> SessionFolder {
         guard let data = try? Data(contentsOf: url) else {
             throw ImportError.unreadableFile
         }
@@ -166,6 +172,7 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
     /// mRemoteNG password format (Base64):
     ///   salt[16] | IV[16] | ciphertext[N] | GCM-tag[16]
     /// Key = PBKDF2-HMAC-SHA1(masterPassword, salt, kdfIterations, keyLen=32)
+    /// The GCM tag is authenticated with the salt as additional authenticated data.
     private func decryptPassword(_ base64: String) -> String? {
         guard !base64.isEmpty else { return "" }
 
@@ -191,7 +198,9 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
             let symKey    = SymmetricKey(data: derivedKey)
             let nonce     = try AES.GCM.Nonce(data: iv)
             let sealedBox = try AES.GCM.SealedBox(nonce: nonce, ciphertext: ciphertext, tag: tag)
-            let plain     = try AES.GCM.open(sealedBox, using: symKey)
+            // mRemoteNG authenticates the GCM tag using the salt as additional
+            // authenticated data — omitting it makes every decrypt fail.
+            let plain     = try AES.GCM.open(sealedBox, using: symKey, authenticating: salt)
             return String(data: plain, encoding: .utf8)
         } catch {
             // Key was wrong (wrong master password) or data is corrupt — return nil
