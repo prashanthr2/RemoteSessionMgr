@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 @main
 struct RemoteSessionMgrApp: App {
@@ -10,12 +11,55 @@ struct RemoteSessionMgrApp: App {
                 .environmentObject(viewModel)
         }
         .defaultSize(width: 1200, height: 760)
+        .commands {
+            AppCommands(viewModel: viewModel)
+        }
 
         Settings {
             SettingsView()
                 .environmentObject(viewModel)
                 .frame(width: 520, height: 280)
                 .padding(20)
+        }
+    }
+}
+
+struct AppCommands: Commands {
+    let viewModel: AppViewModel
+
+    var body: some Commands {
+        CommandGroup(after: .newItem) {
+            Button("New Folder") {
+                viewModel.newFolder()
+            }
+            .keyboardShortcut("n", modifiers: [.command, .shift])
+
+            Divider()
+
+            Button("Import mRemoteNG Connections…") {
+                openImportPanel()
+            }
+        }
+
+        CommandGroup(after: .pasteboard) {
+            Divider()
+            Button("Delete") {
+                viewModel.deleteSelectedItem()
+            }
+            .keyboardShortcut(.delete, modifiers: [])
+            .disabled(viewModel.selection == nil)
+        }
+    }
+
+    private func openImportPanel() {
+        let panel = NSOpenPanel()
+        panel.title = "Import mRemoteNG Connections"
+        panel.message = "Select your mRemoteNG confCons.xml file"
+        panel.allowedContentTypes = [.xml]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        if panel.runModal() == .OK, let url = panel.url {
+            viewModel.importMRemoteNG(from: url)
         }
     }
 }

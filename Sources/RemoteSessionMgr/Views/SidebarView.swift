@@ -15,9 +15,6 @@ struct SidebarView: View {
             }
             .listStyle(.sidebar)
             .searchable(text: $viewModel.searchText, placement: .sidebar, prompt: "Search sessions")
-            .onDeleteCommand {
-                viewModel.deleteSelectedItem()
-            }
 
             SidebarInspectorView()
                 .frame(minHeight: 260, idealHeight: 320)
@@ -39,6 +36,8 @@ struct SidebarView: View {
         case .folder:
             Label(node.title, systemImage: "folder")
                 .font(.body)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
                 .contextMenu {
                     Button("New Session in Folder") {
                         viewModel.handleSelectionChange(node.id)
@@ -65,15 +64,17 @@ struct SidebarView: View {
                 }
             }
             .padding(.vertical, 2)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
-            .onTapGesture {
-                viewModel.handleSelectionChange(node.id)
-            }
-            .onTapGesture(count: 2) {
-                if case .session(let sessionID) = node.id {
-                    viewModel.connectSession(withID: sessionID)
+            // Double-click to connect — simultaneousGesture so it doesn't
+            // block the context menu or List selection
+            .simultaneousGesture(
+                TapGesture(count: 2).onEnded {
+                    if case .session(let sessionID) = node.id {
+                        viewModel.connectSession(withID: sessionID)
+                    }
                 }
-            }
+            )
             .contextMenu {
                 Button("Connect") {
                     if case .session(let sessionID) = node.id {
