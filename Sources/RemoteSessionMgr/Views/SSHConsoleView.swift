@@ -8,6 +8,5 @@ struct SSHConsoleView: View {
             .id(tab.id)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.black)
-            .clipped()
     }
 }

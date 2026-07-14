@@ -43,4 +43,21 @@ final class TerminalHostContainerView: NSView {
         super.layout()
         subviews.first?.frame = bounds
     }
+
+    // Clicking anywhere in the container focuses the terminal
+    override func mouseDown(with event: NSEvent) {
+        if let terminal = subviews.first {
+            window?.makeFirstResponder(terminal)
+        }
+        super.mouseDown(with: event)
+    }
+
+    // When added to a window, request focus immediately
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        guard window != nil, let terminal = subviews.first else { return }
+        DispatchQueue.main.async { [weak self] in
+            self?.window?.makeFirstResponder(terminal)
+        }
+    }
 }

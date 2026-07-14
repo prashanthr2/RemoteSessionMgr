@@ -18,7 +18,6 @@ struct ContentView: View {
 
                 detailPane
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .clipped()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(Color(NSColor.windowBackgroundColor))
