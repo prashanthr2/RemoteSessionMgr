@@ -27,13 +27,16 @@ struct AppSettings: Codable {
     /// rather than `xfreerdp` because the SDL client renders in a native
     /// window and does not require XQuartz/X11. `/cert:ignore` skips the
     /// certificate-trust prompt so the connection isn't blocked on first use.
+    /// `/size:90%` opens at 90% of the screen and `+dynamic-resolution` makes
+    /// the remote desktop follow the window as it's resized.
     static let defaultRDPCommandTemplate =
-        "sdl-freerdp /v:{host} /port:{port} /u:{username} /p:{password} /cert:ignore"
+        "sdl-freerdp /v:{host} /port:{port} /u:{username} /p:{password} /cert:ignore /size:90% +dynamic-resolution"
 
-    /// Previous default(s) that predate `sdl-freerdp`. Persisted settings
-    /// still holding one of these are migrated to the current default on load.
+    /// Previous default(s). Persisted settings still holding one of these are
+    /// migrated to the current default on load.
     static let legacyRDPCommandTemplates = [
-        "xfreerdp /v:{host} /u:{username} /port:{port}"
+        "xfreerdp /v:{host} /u:{username} /port:{port}",
+        "sdl-freerdp /v:{host} /port:{port} /u:{username} /p:{password} /cert:ignore"
     ]
 
     static let `default` = AppSettings(
