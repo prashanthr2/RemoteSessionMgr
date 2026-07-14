@@ -9,7 +9,7 @@ struct RemoteSessionMgrApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
-                .focusedSceneObject(viewModel)
+                .focusedObject(viewModel)
         }
         .defaultSize(width: 1200, height: 760)
         .commands {
@@ -26,7 +26,7 @@ struct RemoteSessionMgrApp: App {
 }
 
 struct AppCommands: Commands {
-    @FocusedSceneObject var viewModel: AppViewModel?
+    @FocusedObject var viewModel: AppViewModel?
 
     var body: some Commands {
         CommandGroup(after: .newItem) {
