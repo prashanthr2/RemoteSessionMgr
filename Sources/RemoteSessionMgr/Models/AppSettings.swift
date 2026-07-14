@@ -23,8 +23,21 @@ struct AppSettings: Codable {
     var defaultSSHLauncher: SSHLauncherOption
     var rdpCommandTemplate: String
 
+    /// Default RDP command. Uses `sdl-freerdp` (from `brew install freerdp`)
+    /// rather than `xfreerdp` because the SDL client renders in a native
+    /// window and does not require XQuartz/X11. `/cert:ignore` skips the
+    /// certificate-trust prompt so the connection isn't blocked on first use.
+    static let defaultRDPCommandTemplate =
+        "sdl-freerdp /v:{host} /port:{port} /u:{username} /p:{password} /cert:ignore"
+
+    /// Previous default(s) that predate `sdl-freerdp`. Persisted settings
+    /// still holding one of these are migrated to the current default on load.
+    static let legacyRDPCommandTemplates = [
+        "xfreerdp /v:{host} /u:{username} /port:{port}"
+    ]
+
     static let `default` = AppSettings(
         defaultSSHLauncher: .inApp,
-        rdpCommandTemplate: "xfreerdp /v:{host} /u:{username} /port:{port}"
+        rdpCommandTemplate: defaultRDPCommandTemplate
     )
 }

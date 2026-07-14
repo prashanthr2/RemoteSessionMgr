@@ -34,7 +34,15 @@ struct AppStorage {
 
     func loadSettings() throws -> AppSettings {
         if settingsStore.exists() {
-            return try settingsStore.load()
+            var settings = try settingsStore.load()
+            // Migrate an outdated RDP template (e.g. the old xfreerdp default,
+            // which needs XQuartz) to the current sdl-freerdp default.
+            let trimmed = settings.rdpCommandTemplate.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmed.isEmpty || AppSettings.legacyRDPCommandTemplates.contains(trimmed) {
+                settings.rdpCommandTemplate = AppSettings.defaultRDPCommandTemplate
+                try? settingsStore.save(settings)
+            }
+            return settings
         }
         let settings = AppSettings.default
         try settingsStore.save(settings)
@@ -89,7 +97,7 @@ enum SampleData {
                     port: 3389,
                     username: "administrator",
                     password: "",
-                    notes: "Uses xfreerdp by default.",
+                    notes: "Uses sdl-freerdp by default.",
                     createdAt: now,
                     updatedAt: now
                 )

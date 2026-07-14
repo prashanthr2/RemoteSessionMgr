@@ -14,7 +14,11 @@ struct SettingsView: View {
             TextField("RDP command template", text: $viewModel.settings.rdpCommandTemplate)
                 .textFieldStyle(.roundedBorder)
 
-            Text("Supported placeholders: {host}, {port}, {username}, {name}")
+            Text("Supported placeholders: {host}, {port}, {username}, {password}, {name}")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            Text("Default uses sdl-freerdp (install with `brew install freerdp`), which opens a native window and needs no XQuartz.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
