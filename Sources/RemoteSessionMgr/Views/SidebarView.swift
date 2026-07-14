@@ -22,7 +22,6 @@ struct SidebarView: View {
         }
         .frame(minWidth: 300, idealWidth: 340)
         .background(Color(NSColor.windowBackgroundColor))
-        .navigationTitle("RemoteSessionMgr")
         .onAppear { installDeleteKeyMonitor() }
     }
 
