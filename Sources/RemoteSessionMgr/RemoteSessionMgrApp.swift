@@ -50,7 +50,6 @@ struct AppCommands: Commands {
                 viewModel?.deleteSelectedItem()
             }
             .keyboardShortcut(.delete, modifiers: [])
-            .disabled(viewModel?.selection == nil)
         }
     }
 

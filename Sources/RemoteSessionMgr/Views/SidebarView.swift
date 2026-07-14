@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 struct SidebarView: View {
@@ -21,6 +22,22 @@ struct SidebarView: View {
         }
         .frame(minWidth: 300, idealWidth: 340)
         .background(Color(NSColor.windowBackgroundColor))
+        .onAppear { installDeleteKeyMonitor() }
+    }
+
+    // Catch Delete key app-wide so it works regardless of which
+    // view currently holds keyboard focus.
+    private func installDeleteKeyMonitor() {
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            // keyCode 51 = Delete (backspace), 117 = Forward Delete
+            guard (event.keyCode == 51 || event.keyCode == 117),
+                  event.modifierFlags.intersection(.deviceIndependentFlagsMask).isEmpty,
+                  viewModel.selection != nil else {
+                return event
+            }
+            viewModel.deleteSelectedItem()
+            return nil  // consume the event
+        }
     }
 
     private var selectionBinding: Binding<SidebarSelection?> {
