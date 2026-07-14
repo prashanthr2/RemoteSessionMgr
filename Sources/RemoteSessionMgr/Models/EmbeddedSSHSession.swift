@@ -95,6 +95,12 @@ final class EmbeddedSSHSession: NSObject, ObservableObject, Identifiable, LocalP
             guard let self else { return nil }
             return self.password.isEmpty ? nil : self.password
         }
+        terminalView.onFirstData = { [weak self] in
+            Task { @MainActor [weak self] in
+                guard let self, self.state == .connecting else { return }
+                self.state = .connected
+            }
+        }
         terminalView.metalBufferingMode = .perFrameAggregated
         try? terminalView.setUseMetal(false)
 
@@ -149,11 +155,24 @@ final class EmbeddedSSHSession: NSObject, ObservableObject, Identifiable, LocalP
 final class PasswordAwareTerminalView: LocalProcessTerminalView {
     var passwordProvider: (() -> String?)?
 
+    /// Called once when the first byte of output arrives from the remote.
+    /// Used to flip the session state from "Connecting" to "Connected"
+    /// without relying on terminal-title or OSC-7 escape sequences.
+    var onFirstData: (() -> Void)?
+
     private var trailingOutput = ""
     private var hasSentPassword = false
+    private var hasReceivedData = false
 
     override func dataReceived(slice: ArraySlice<UInt8>) {
         super.dataReceived(slice: slice)
+
+        // Fire once as soon as any output arrives — this reliably indicates
+        // the SSH handshake completed and the remote shell is responding.
+        if !hasReceivedData {
+            hasReceivedData = true
+            onFirstData?()
+        }
 
         let chunk = String(decoding: slice, as: UTF8.self)
         trailingOutput.append(chunk)
@@ -173,5 +192,6 @@ final class PasswordAwareTerminalView: LocalProcessTerminalView {
     func prepareForNewConnection() {
         trailingOutput.removeAll(keepingCapacity: true)
         hasSentPassword = false
+        hasReceivedData = false
     }
 }

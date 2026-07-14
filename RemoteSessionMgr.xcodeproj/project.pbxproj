@@ -18,6 +18,7 @@
 		001000000000000000000016 /* SwiftTermContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000018 /* SwiftTermContainerView.swift */; };
 		001000000000000000000006 /* AppStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000006 /* AppStorage.swift */; };
 		001000000000000000000007 /* JSONFileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000007 /* JSONFileStore.swift */; };
+		00100000000000000000001A /* MRemoteNGImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000001A /* MRemoteNGImporter.swift */; };
 		001000000000000000000008 /* RDPLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000008 /* RDPLauncher.swift */; };
 		001000000000000000000009 /* SSHLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002000000000000000000009 /* SSHLauncher.swift */; };
 		00100000000000000000000A /* SessionLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00200000000000000000000A /* SessionLauncher.swift */; };
@@ -45,6 +46,7 @@
 		002000000000000000000018 /* SwiftTermContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTermContainerView.swift; sourceTree = "<group>"; };
 		002000000000000000000006 /* AppStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorage.swift; sourceTree = "<group>"; };
 		002000000000000000000007 /* JSONFileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFileStore.swift; sourceTree = "<group>"; };
+		00200000000000000000001A /* MRemoteNGImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRemoteNGImporter.swift; sourceTree = "<group>"; };
 		002000000000000000000008 /* RDPLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDPLauncher.swift; sourceTree = "<group>"; };
 		002000000000000000000009 /* SSHLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHLauncher.swift; sourceTree = "<group>"; };
 		00200000000000000000000A /* SessionLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLauncher.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				002000000000000000000006 /* AppStorage.swift */,
 				002000000000000000000007 /* JSONFileStore.swift */,
+				00200000000000000000001A /* MRemoteNGImporter.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				001000000000000000000013 /* EmbeddedSSHSession.swift in Sources */,
 				001000000000000000000006 /* AppStorage.swift in Sources */,
 				001000000000000000000007 /* JSONFileStore.swift in Sources */,
+				00100000000000000000001A /* MRemoteNGImporter.swift in Sources */,
 				001000000000000000000008 /* RDPLauncher.swift in Sources */,
 				001000000000000000000009 /* SSHLauncher.swift in Sources */,
 				00100000000000000000000A /* SessionLauncher.swift in Sources */,
