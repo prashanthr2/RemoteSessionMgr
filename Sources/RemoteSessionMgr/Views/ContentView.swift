@@ -43,6 +43,13 @@ struct ContentView: View {
                     Label("Import mRemoteNG", systemImage: "square.and.arrow.down")
                 }
 
+                Button(role: .destructive) {
+                    viewModel.deleteSelectedItem()
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+                .disabled(viewModel.selection == nil)
+
                 Button {
                     viewModel.connectSelectedSession()
                 } label: {

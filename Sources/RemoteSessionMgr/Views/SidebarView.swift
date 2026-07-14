@@ -25,8 +25,8 @@ struct SidebarView: View {
         .onAppear { installDeleteKeyMonitor() }
     }
 
-    // Catch Delete key app-wide so it works regardless of which
-    // view currently holds keyboard focus.
+    // Catch Delete key only when a text input view does NOT have focus
+    // (i.e. the sidebar is the active context, not the terminal or a text field).
     private func installDeleteKeyMonitor() {
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             // keyCode 51 = Delete (backspace), 117 = Forward Delete
@@ -35,8 +35,13 @@ struct SidebarView: View {
                   viewModel.selection != nil else {
                 return event
             }
+            // Don't steal Delete from text views or the terminal
+            let responder = NSApp.keyWindow?.firstResponder
+            let isTextInput = responder is NSTextView || responder is NSTextField
+            guard !isTextInput else { return event }
+
             viewModel.deleteSelectedItem()
-            return nil  // consume the event
+            return nil
         }
     }
 
