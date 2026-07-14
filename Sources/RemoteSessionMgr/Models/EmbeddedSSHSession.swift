@@ -194,4 +194,33 @@ final class PasswordAwareTerminalView: LocalProcessTerminalView {
         hasSentPassword = false
         hasReceivedData = false
     }
+
+    // Right-click / control-click context menu with Copy & Paste. SwiftTerm
+    // provides no contextual menu of its own, so without this a right-click
+    // does nothing. Copy is validated (dimmed with no selection) by the
+    // terminal's own validateUserInterfaceItem(_:).
+    override func menu(for event: NSEvent) -> NSMenu? {
+        window?.makeFirstResponder(self)
+
+        let menu = NSMenu()
+
+        let copyItem = NSMenuItem(title: "Copy", action: #selector(copy(_:)), keyEquivalent: "c")
+        copyItem.keyEquivalentModifierMask = .command
+        copyItem.target = self
+        menu.addItem(copyItem)
+
+        let pasteItem = NSMenuItem(title: "Paste", action: #selector(paste(_:)), keyEquivalent: "v")
+        pasteItem.keyEquivalentModifierMask = .command
+        pasteItem.target = self
+        menu.addItem(pasteItem)
+
+        menu.addItem(.separator())
+
+        let selectAllItem = NSMenuItem(title: "Select All", action: #selector(selectAll(_:)), keyEquivalent: "a")
+        selectAllItem.keyEquivalentModifierMask = .command
+        selectAllItem.target = self
+        menu.addItem(selectAllItem)
+
+        return menu
+    }
 }
