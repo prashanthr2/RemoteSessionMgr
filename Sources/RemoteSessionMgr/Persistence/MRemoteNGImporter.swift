@@ -55,6 +55,11 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
     private let masterPassword: String
     private var kdfIterations: Int = 1000
     private var folderStack: [SessionFolder] = []
+    /// One entry per currently-open <Node>, marking whether it is a Container.
+    /// Connection nodes are self-closing, so they fire didEndElement too — this
+    /// lets us pop the folder stack only when a Container closes, not a
+    /// Connection (which would otherwise collapse the whole hierarchy).
+    private var openNodeIsContainer: [Bool] = []
     private var parseError: Error?
 
     init(masterPassword: String) {
@@ -96,15 +101,14 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
         switch type {
         case "Container":
             folderStack.append(SessionFolder(name: attributes["Name"] ?? "Folder"))
-
-        case "Connection":
-            guard !folderStack.isEmpty else { return }
-            if let session = buildSession(from: attributes) {
-                folderStack[folderStack.count - 1].sessions.append(session)
-            }
+            openNodeIsContainer.append(true)
 
         default:
-            break
+            // Connection (or any non-container leaf node).
+            if !folderStack.isEmpty, let session = buildSession(from: attributes) {
+                folderStack[folderStack.count - 1].sessions.append(session)
+            }
+            openNodeIsContainer.append(false)
         }
     }
 
@@ -115,8 +119,9 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
         qualifiedName qName: String?
     ) {
         let localName = stripNamespace(elementName)
-        guard localName == "Connections" || (localName == "Node" && folderStack.count > 1) else { return }
-        if folderStack.count > 1 {
+        guard localName == "Node", let wasContainer = openNodeIsContainer.popLast() else { return }
+        // Only a closing Container finishes a folder and nests it in its parent.
+        if wasContainer, folderStack.count > 1 {
             let finished = folderStack.removeLast()
             folderStack[folderStack.count - 1].folders.append(finished)
         }
@@ -137,8 +142,9 @@ private final class MRemoteNGXMLParser: NSObject, XMLParserDelegate {
 
     private func buildSession(from attrs: [String: String]) -> RemoteSession? {
         let name      = attrs["Name"] ?? "Unnamed"
+        // Import even hostname-less entries so nothing silently disappears; the
+        // user can fill in the host later (launching guards against empty host).
         let hostname  = attrs["Hostname"] ?? ""
-        guard !hostname.isEmpty else { return nil }
 
         let username  = attrs["Username"] ?? ""
         let rawPw     = attrs["Password"] ?? ""

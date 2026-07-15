@@ -267,7 +267,19 @@ final class AppViewModel: ObservableObject {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         let includeAll = query.isEmpty
 
-        return folder.folders.compactMap { childFolder in
+        // List servers in a folder first, then its subfolders.
+        let sessionNodes = folder.sessions.compactMap { session -> SidebarNode? in
+            guard includeAll || matches(session: session, query: query) else { return nil }
+            return SidebarNode(
+                id: .session(session.id),
+                title: session.name,
+                subtitle: "\(session.protocolType.rawValue) • \(session.host)",
+                kind: .session,
+                children: nil
+            )
+        }
+
+        let folderNodes = folder.folders.compactMap { childFolder -> SidebarNode? in
             let childNodes = filteredNodes(for: childFolder, searchText: query)
             let folderMatches = includeAll || childFolder.name.localizedCaseInsensitiveContains(query)
             guard folderMatches || !childNodes.isEmpty else { return nil }
@@ -279,16 +291,9 @@ final class AppViewModel: ObservableObject {
                 kind: .folder,
                 children: childNodes
             )
-        } + folder.sessions.compactMap { session in
-            guard includeAll || matches(session: session, query: query) else { return nil }
-            return SidebarNode(
-                id: .session(session.id),
-                title: session.name,
-                subtitle: "\(session.protocolType.rawValue) • \(session.host)",
-                kind: .session,
-                children: nil
-            )
         }
+
+        return sessionNodes + folderNodes
     }
 
     private func matches(session: RemoteSession, query: String) -> Bool {
