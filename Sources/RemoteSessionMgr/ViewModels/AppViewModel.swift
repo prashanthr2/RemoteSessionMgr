@@ -210,12 +210,13 @@ final class AppViewModel: ObservableObject {
     }
 
     private func openEmbeddedSSHSession(for session: RemoteSession) {
-        if let existing = sshTabs.first(where: { $0.sourceSessionID == session.id }) {
-            activeDetailPane = .ssh(existing.id)
-            return
-        }
+        // Always open a fresh session — each connect gets its own tab, even
+        // when one to the same server is already open. Number duplicates so
+        // their tabs are distinguishable.
+        let siblings = sshTabs.filter { $0.sourceSessionID == session.id }
+        let instanceNumber = (siblings.map(\.instanceNumber).max() ?? 0) + 1
 
-        let tab = EmbeddedSSHSession(session: session)
+        let tab = EmbeddedSSHSession(session: session, instanceNumber: instanceNumber)
         sshTabs.append(tab)
         selection = .session(session.id)
         activeDetailPane = .ssh(tab.id)

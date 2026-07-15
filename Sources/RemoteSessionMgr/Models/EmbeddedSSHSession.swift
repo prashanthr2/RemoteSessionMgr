@@ -26,11 +26,20 @@ final class EmbeddedSSHSession: NSObject, ObservableObject, Identifiable, LocalP
     let host: String
     let username: String
     let port: Int
+    /// Distinguishes multiple simultaneous sessions to the same server.
+    /// The first is 1; subsequent ones get 2, 3, … and show a suffix.
+    let instanceNumber: Int
     let terminalView: PasswordAwareTerminalView
 
     @Published var title: String
     @Published var state: EmbeddedSSHSessionState = .connecting
     @Published var currentDirectory: String?
+
+    /// Tab label: the session name, with a " (N)" suffix when more than one
+    /// session to the same server is open.
+    var displayTitle: String {
+        instanceNumber > 1 ? "\(title) (\(instanceNumber))" : title
+    }
 
     var isDisconnected: Bool {
         if case .disconnected = state {
@@ -45,7 +54,7 @@ final class EmbeddedSSHSession: NSObject, ObservableObject, Identifiable, LocalP
     private let password: String
     private var hasStarted = false
 
-    init(session: RemoteSession) {
+    init(session: RemoteSession, instanceNumber: Int = 1) {
         sourceSessionID = session.id
         sessionName = session.name
         title = session.name
@@ -53,6 +62,7 @@ final class EmbeddedSSHSession: NSObject, ObservableObject, Identifiable, LocalP
         username = session.username
         port = session.port
         password = session.password
+        self.instanceNumber = instanceNumber
         terminalView = PasswordAwareTerminalView(frame: .zero)
         super.init()
         configureTerminal()

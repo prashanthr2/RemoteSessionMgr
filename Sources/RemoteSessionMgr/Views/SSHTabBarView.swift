@@ -61,7 +61,7 @@ struct SSHTabBarView: View {
                     .foregroundStyle(isSelected(tab.id) ? Color.accentColor : .secondary)
 
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(tab.title)
+                    Text(tab.displayTitle)
                         .font(.system(size: 12, weight: .medium))
                         .lineLimit(1)
                     Text(tab.state.label)
